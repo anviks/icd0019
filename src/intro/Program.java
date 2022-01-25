@@ -9,11 +9,11 @@ public class Program {
         System.out.println(decimal); // 205
     }
 
-    private static String asString(int input) {
+    public static String asString(int input) {
         return "";
     }
 
-    private static int asDecimal(String input) {
+    public static int asDecimal(String input) {
         return 0;
     }
 
