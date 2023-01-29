@@ -1,22 +1,15 @@
-package intro.samples;
+package intro;
 
 public class Examples {
 
     public static void main(String[] args) {
 
-        // print to console
+        // print to the console
         System.out.println("Hello!"); // Hello!
 
-        // simple while loop
-        int i = 0;
-        while (i < 3) {
-            System.out.println(i);
-            i++;
-        }
-
         // loop from 0 to 2
-        for (int j = 0; j < 3; j++) {
-            System.out.println(j); // 0 ...
+        for (int i = 0; i < 3; i++) {
+            System.out.println(i); // 0 ...
         }
 
         // concatenate two strings
@@ -24,14 +17,18 @@ public class Examples {
         String concatenated = "aa" + "bb";
         System.out.println(concatenated); // aabb
 
-        // get single letter (character) from string
+        // get single letter (character) from a string
         System.out.println(concatenated.charAt(2)); // b
 
+        // add single letter to a string
+        // NB! Letters are in single quotes.
+        concatenated =  concatenated + 'c';
+        System.out.println(concatenated); // aabbc
+
         // get string length
-        System.out.println(concatenated.length()); // 4
+        System.out.println(concatenated.length()); // 5
 
         // compare two letters
-        // NB! Letters are in single quotes.
         // NB! Letter is different from one letter string ("a" != 'a')
         if (concatenated.charAt(2) == 'b') {
             System.out.println(true); // true
