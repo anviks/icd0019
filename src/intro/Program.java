@@ -11,6 +11,7 @@ public class Program {
         System.out.println(pow(2, 5));
         System.out.println(pow(4, 2));
         System.out.println(pow(4, 0));
+
     }
 
     public static String asString(int input) {
