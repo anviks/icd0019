@@ -73,47 +73,7 @@ public class Code {
 
         for (int row = 0; row < matrix.length; row++) {
             for (int column = 0; column < matrix[0].length; column++) {
-                boolean isolated = true;
-
-                try {
-                    isolated &= !matrix[row - 1][column - 1];
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
-
-                try {
-                    isolated &= !matrix[row - 1][column];
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
-
-                try {
-                    isolated &= !matrix[row - 1][column + 1];
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
-
-                try {
-                    isolated &= !matrix[row + 1][column - 1];
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
-
-                try {
-                    isolated &= !matrix[row + 1][column];
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
-
-                try {
-                    isolated &= !matrix[row + 1][column + 1];
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
-
-                try {
-                    isolated &= !matrix[row][column - 1];
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
-
-                try {
-                    isolated &= !matrix[row][column + 1];
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
+                boolean isolated = isIsolated(matrix, row, column, true);
 
                 if (isolated) {
                     isolatedCount++;
@@ -122,6 +82,49 @@ public class Code {
         }
 
         return isolatedCount;
+    }
+
+    private static boolean isIsolated(boolean[][] matrix, int row, int column, boolean isolated) {
+        try {
+            isolated &= !matrix[row - 1][column - 1];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        try {
+            isolated &= !matrix[row - 1][column];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        try {
+            isolated &= !matrix[row - 1][column + 1];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        try {
+            isolated &= !matrix[row + 1][column - 1];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        try {
+            isolated &= !matrix[row + 1][column];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        try {
+            isolated &= !matrix[row + 1][column + 1];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        try {
+            isolated &= !matrix[row][column - 1];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+
+        try {
+            isolated &= !matrix[row][column + 1];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+        return isolated;
     }
 
     private static void printMatrix(boolean[][] matrix) {

@@ -10,8 +10,7 @@ public class Performance {
         int y = 2;
         double r = 0;
         for (int i = 0; i < 1e8; i++) {
-            r += (float) x / y;
-//            r += Float.valueOf(x) / y;
+            r += Float.valueOf(x) / y;
         }
 
         System.out.println((System.currentTimeMillis() - start) / 1000);
