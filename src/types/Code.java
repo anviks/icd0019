@@ -66,33 +66,61 @@ public class Code {
 
     public static int isolatedSquareCount() {
         boolean[][] matrix = getSampleMatrix();
-
         printMatrix(matrix);
 
         int isolatedCount = 0;
-
         for (int row = 0; row < matrix.length; row++) {
             for (int column = 0; column < matrix[0].length; column++) {
-                boolean topRow = row == 0;
-                boolean bottomRow = row == matrix.length - 1;
-                boolean leftColumn = column == 0;
-                boolean rightColumn = column == matrix[0].length - 1;
-
-                if ((leftColumn || !matrix[row][column - 1])
-                        && (rightColumn || !matrix[row][column + 1])
-                        && (topRow || leftColumn || !matrix[row - 1][column - 1])
-                        && (topRow || !matrix[row - 1][column])
-                        && (topRow || rightColumn || !matrix[row - 1][column + 1])
-                        && (bottomRow || leftColumn || !matrix[row + 1][column - 1])
-                        && (bottomRow || !matrix[row + 1][column])
-                        && (bottomRow || rightColumn || !matrix[row + 1][column + 1])) {
-
+                if (isIsolated(matrix, row, column)) {
                     isolatedCount++;
                 }
             }
         }
 
         return isolatedCount;
+    }
+
+    private static boolean isIsolated(boolean[][] matrix, int row, int column) {
+        return !left(matrix, row, column)
+                && !right(matrix, row, column)
+                && !top(matrix, row, column)
+                && !bottom(matrix, row, column)
+                && !topLeft(matrix, row, column)
+                && !topRight(matrix, row, column)
+                && !bottomLeft(matrix, row, column)
+                && !bottomRight(matrix, row, column);
+    }
+
+    private static boolean left(boolean[][] matrix, int row, int column) {
+        return column != 0 && matrix[row][column - 1];
+    }
+
+    private static boolean right(boolean[][] matrix, int row, int column) {
+        return column != matrix[0].length - 1 && matrix[row][column + 1];
+    }
+
+    private static boolean top(boolean[][] matrix, int row, int column) {
+        return row != 0 && matrix[row - 1][column];
+    }
+
+    private static boolean bottom(boolean[][] matrix, int row, int column) {
+        return row != matrix.length - 1 && matrix[row + 1][column];
+    }
+
+    private static boolean topLeft(boolean[][] matrix, int row, int column) {
+        return row != 0 && column != 0 && matrix[row - 1][column - 1];
+    }
+
+    private static boolean topRight(boolean[][] matrix, int row, int column) {
+        return row != 0 && column != matrix[0].length - 1 && matrix[row - 1][column + 1];
+    }
+
+    private static boolean bottomLeft(boolean[][] matrix, int row, int column) {
+        return row != matrix.length - 1 && column != 0 && matrix[row + 1][column - 1];
+    }
+
+    private static boolean bottomRight(boolean[][] matrix, int row, int column) {
+        return row != matrix.length - 1 && column != matrix[0].length - 1 && matrix[row + 1][column + 1];
     }
 
     private static void printMatrix(boolean[][] matrix) {
