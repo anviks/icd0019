@@ -73,15 +73,19 @@ public class Code {
 
         for (int row = 0; row < matrix.length; row++) {
             for (int column = 0; column < matrix[0].length; column++) {
+                boolean topRow = row == 0;
+                boolean bottomRow = row == matrix.length - 1;
+                boolean leftColumn = column == 0;
+                boolean rightColumn = column == matrix[0].length - 1;
 
-                if ((column == 0 || !matrix[row][column - 1])
-                        && (column == matrix[0].length - 1 || !matrix[row][column + 1])
-                        && (row == 0 || column == 0 || !matrix[row - 1][column - 1])
-                        && (row == 0 || !matrix[row - 1][column])
-                        && (row == 0 || column == matrix[0].length - 1 || !matrix[row - 1][column + 1])
-                        && (row == matrix.length - 1 || column == 0 || !matrix[row + 1][column - 1])
-                        && (row == matrix.length - 1 || !matrix[row + 1][column])
-                        && (row == matrix.length - 1 || column == matrix[0].length - 1 || !matrix[row + 1][column + 1])) {
+                if ((leftColumn || !matrix[row][column - 1])
+                        && (rightColumn || !matrix[row][column + 1])
+                        && (topRow || leftColumn || !matrix[row - 1][column - 1])
+                        && (topRow || !matrix[row - 1][column])
+                        && (topRow || rightColumn || !matrix[row - 1][column + 1])
+                        && (bottomRow || leftColumn || !matrix[row + 1][column - 1])
+                        && (bottomRow || !matrix[row + 1][column])
+                        && (bottomRow || rightColumn || !matrix[row + 1][column + 1])) {
 
                     isolatedCount++;
                 }
