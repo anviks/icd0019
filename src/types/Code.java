@@ -102,11 +102,12 @@ public class Code {
     }
 
     private static boolean checkRowAbove(boolean[][] matrix, int row, int column) {
-        boolean isolated = true;
+        boolean isolated;
 
         try {
             isolated = !matrix[row - 1][column - 1];
         } catch (ArrayIndexOutOfBoundsException ignored) {
+            isolated = true;
         }
 
         try {
