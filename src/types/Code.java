@@ -73,73 +73,22 @@ public class Code {
 
         for (int row = 0; row < matrix.length; row++) {
             for (int column = 0; column < matrix[0].length; column++) {
-                boolean isolated = isIsolated(matrix, row, column);
 
-                if (isolated) {
+                if ((column == 0 || !matrix[row][column - 1])
+                        && (column == matrix[0].length - 1 || !matrix[row][column + 1])
+                        && (row == 0 || column == 0 || !matrix[row - 1][column - 1])
+                        && (row == 0 || !matrix[row - 1][column])
+                        && (row == 0 || column == matrix[0].length - 1 || !matrix[row - 1][column + 1])
+                        && (row == matrix.length - 1 || column == 0 || !matrix[row + 1][column - 1])
+                        && (row == matrix.length - 1 || !matrix[row + 1][column])
+                        && (row == matrix.length - 1 || column == matrix[0].length - 1 || !matrix[row + 1][column + 1])) {
+
                     isolatedCount++;
                 }
             }
         }
 
         return isolatedCount;
-    }
-
-    private static boolean isIsolated(boolean[][] matrix, int row, int column) {
-        boolean isolated = checkRowAbove(matrix, row, column);
-        isolated = checkRowBelow(matrix, row, column, isolated);
-
-        try {
-            isolated &= !matrix[row][column - 1];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-
-        try {
-            isolated &= !matrix[row][column + 1];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-
-        return isolated;
-    }
-
-    private static boolean checkRowAbove(boolean[][] matrix, int row, int column) {
-        boolean isolated;
-
-        try {
-            isolated = !matrix[row - 1][column - 1];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-            isolated = true;
-        }
-
-        try {
-            isolated &= !matrix[row - 1][column];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-
-        try {
-            isolated &= !matrix[row - 1][column + 1];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-
-        return isolated;
-    }
-
-    private static boolean checkRowBelow(boolean[][] matrix, int row, int column, boolean isolated) {
-        try {
-            isolated &= !matrix[row + 1][column - 1];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-
-        try {
-            isolated &= !matrix[row + 1][column];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-
-        try {
-            isolated &= !matrix[row + 1][column + 1];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-
-        return isolated;
     }
 
     private static void printMatrix(boolean[][] matrix) {
