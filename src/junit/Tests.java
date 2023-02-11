@@ -74,6 +74,7 @@ public class Tests {
         assertNull(Code.mode(""));
         assertEquals('b', Code.mode("abcb").charValue());
         assertTrue(List.of('b', 'c').contains(Code.mode("cbbc")));
+        assertEquals('c', Code.mode("cbbc").charValue());
     }
 
     @Test

@@ -50,6 +50,7 @@ public class Code {
         Optional<Character> max = occurrences
                 .keySet()
                 .stream()
+                .sorted(Comparator.reverseOrder())
                 .max(Comparator.comparingInt(occurrences::get));
 
         return max.orElse(null);
