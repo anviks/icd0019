@@ -44,7 +44,7 @@ public class Code {
         char[] letters = inputString.toCharArray();
 
         for (char letter : letters) {
-            getCharacterCount(occurrences, letter);
+            occurrences.put(letter, getCharacterCount(inputString, letter));
         }
 
         Optional<Character> max = occurrences
@@ -55,9 +55,16 @@ public class Code {
         return max.orElse(null);
     }
 
-    public static void getCharacterCount(HashMap<Character, Integer> occurrences, char letter) {
-        occurrences.putIfAbsent(letter, 0);
-        occurrences.put(letter, occurrences.get(letter) + 1);
+    public static int getCharacterCount(String allCharacters, char targetCharacter) {
+        int count = 0;
+
+        for (char character : allCharacters.toCharArray()) {
+            if (character == targetCharacter) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     public static int[] removeDuplicates(int[] integers) {

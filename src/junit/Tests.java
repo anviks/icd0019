@@ -78,9 +78,8 @@ public class Tests {
 
     @Test
     public void characterCount() {
-        HashMap<Character, Integer> count = new HashMap<>();
-        Code.getCharacterCount(count, 'a');
-        assertEquals(Map.of('a', 1), count);
+        assertEquals(4, Code.getCharacterCount("asfsadasdas", 'a'));
+        assertEquals(7, Code.getCharacterCount("jjjjopdsa3240ujas80yd38204jj", 'j'));
     }
 
     @Test
