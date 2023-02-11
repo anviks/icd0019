@@ -69,7 +69,32 @@ public class Code {
     }
 
     public static int[] removeDuplicates(int[] integers) {
-        return Arrays.stream(integers).distinct().toArray();
+        int[] distinctIntegers = new int[integers.length];
+        int i = 0;
+
+        for (int j = 0; j < integers.length; j++) {
+            if (!contains(distinctIntegers, integers[j], j)) {
+                distinctIntegers[i++] = integers[j];
+            }
+        }
+
+        int[] shortenedIntegers = new int[i];
+
+        for (int j = 0; j < shortenedIntegers.length; j++) {
+            shortenedIntegers[j] = distinctIntegers[j];
+        }
+
+        return shortenedIntegers;
+    }
+
+    public static boolean contains(int[] ints, int element, int index) {
+        for (int i = 0; i < index; i++) {
+            if (ints[i] == element) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static int sumIgnoringDuplicates(int[] integers) {
