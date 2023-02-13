@@ -2,9 +2,7 @@ package junit;
 
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -75,12 +73,13 @@ public class Tests {
         assertEquals('b', Code.mode("abcb").charValue());
         assertTrue(List.of('b', 'c').contains(Code.mode("cbbc")));
         assertEquals('c', Code.mode("cbbc").charValue());
+        assertEquals('c', Code.mode("cbbbccaaafff").charValue());
     }
 
     @Test
     public void characterCount() {
-        assertEquals(4, Code.getCharacterCount("asfsadasdas", 'a'));
-        assertEquals(7, Code.getCharacterCount("jjjjopdsa3240ujas80yd38204jj", 'j'));
+        assertEquals(4, Code.getCharacterCount("asfsadasdas".toCharArray(), 'a'));
+        assertEquals(7, Code.getCharacterCount("jjjjopdsa3240ujas80yd38204jj".toCharArray(), 'j'));
     }
 
     @Test

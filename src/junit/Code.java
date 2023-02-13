@@ -1,9 +1,6 @@
 package junit;
 
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Optional;
 
 public class Code {
 
@@ -13,7 +10,7 @@ public class Code {
 
     public static int longestStreak(String inputString) {
 
-        if (inputString.equals("")) {
+        if ("".equals(inputString)) {
             return 0;
         }
 
@@ -40,26 +37,27 @@ public class Code {
             return null;
         }
 
-        HashMap<Character, Integer> occurrences = new HashMap<>();
         char[] letters = inputString.toCharArray();
 
+        int maxCount = 0;
+        char maxChar = '\0';
+
         for (char letter : letters) {
-            occurrences.put(letter, getCharacterCount(inputString, letter));
+            int count = getCharacterCount(letters, letter);
+            if (count > maxCount
+                    || count == maxCount && inputString.indexOf(letter) < inputString.indexOf(maxChar)) {
+                maxCount = count;
+                maxChar = letter;
+            }
         }
 
-        Optional<Character> max = occurrences
-                .keySet()
-                .stream()
-                .sorted(Comparator.reverseOrder())
-                .max(Comparator.comparingInt(occurrences::get));
-
-        return max.orElse(null);
+        return maxChar == '\0' ? null : maxChar;
     }
 
-    public static int getCharacterCount(String allCharacters, char targetCharacter) {
+    public static int getCharacterCount(char[] allCharacters, char targetCharacter) {
         int count = 0;
 
-        for (char character : allCharacters.toCharArray()) {
+        for (char character : allCharacters) {
             if (character == targetCharacter) {
                 count++;
             }
