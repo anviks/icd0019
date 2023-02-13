@@ -1,7 +1,5 @@
 package junit.sales;
 
-import java.lang.reflect.Array;
-
 public class DynamicArray<E> {
     private Object[] array;
 
@@ -78,8 +76,15 @@ public class DynamicArray<E> {
 
     public void remove(int index) {
         Object[] newArray = new Object[array.length - 1];
-        System.arraycopy(array, 0, newArray, 0, index);
-        System.arraycopy(array, index + 1, newArray, index, array.length - index - 1);
+
+        for (int i = 0; i < index; i++) {
+            newArray[i] = array[i];
+        }
+
+        for (int i = index; i < array.length - 1; i++) {
+            newArray[i] = array[i + 1];
+        }
+
         array = newArray;
     }
 
@@ -89,16 +94,8 @@ public class DynamicArray<E> {
 
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] array) {
-        if (array.length < this.length()) {
-            array = (T[]) Array.newInstance(array.getClass().getComponentType(), this.length());
-        }
-
         for (int i = 0; i < this.length(); i++) {
             array[i] = (T) this.array[i];
-        }
-
-        if (array.length > this.length()) {
-            array[this.length()] = null;
         }
 
         return array;

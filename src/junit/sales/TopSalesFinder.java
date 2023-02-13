@@ -1,6 +1,5 @@
 package junit.sales;
 
-
 public class TopSalesFinder {
 
     public DynamicArray<SalesRecord> sales;
