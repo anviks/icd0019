@@ -43,7 +43,7 @@ public class Code {
         char maxChar = '\0';
 
         for (char letter : letters) {
-            int count = getCharacterCount(letters, letter);
+            int count = getCharacterCount(inputString, letter);
             if (count > maxCount
                     || count == maxCount && inputString.indexOf(letter) < inputString.indexOf(maxChar)) {
                 maxCount = count;
@@ -54,10 +54,10 @@ public class Code {
         return maxChar == '\0' ? null : maxChar;
     }
 
-    public static int getCharacterCount(char[] allCharacters, char targetCharacter) {
+    public static int getCharacterCount(String allCharacters, char targetCharacter) {
         int count = 0;
 
-        for (char character : allCharacters) {
+        for (char character : allCharacters.toCharArray()) {
             if (character == targetCharacter) {
                 count++;
             }

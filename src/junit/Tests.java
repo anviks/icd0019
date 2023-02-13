@@ -78,8 +78,8 @@ public class Tests {
 
     @Test
     public void characterCount() {
-        assertEquals(4, Code.getCharacterCount("asfsadasdas".toCharArray(), 'a'));
-        assertEquals(7, Code.getCharacterCount("jjjjopdsa3240ujas80yd38204jj".toCharArray(), 'j'));
+        assertEquals(4, Code.getCharacterCount("asfsadasdas", 'a'));
+        assertEquals(7, Code.getCharacterCount("jjjjopdsa3240ujas80yd38204jj", 'j'));
     }
 
     @Test
