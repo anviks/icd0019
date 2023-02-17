@@ -1,24 +1,22 @@
 package oo.hide;
 
-import java.util.ArrayList;
-
 public class Fibonacci {
 
-    ArrayList<Integer> numbers = new ArrayList<>();
+    DynamicArray<Integer> numbers = new DynamicArray<>();
 
     public int nextValue() {
 
-        switch (numbers.size()) {
+        switch (numbers.length()) {
             case 0 -> numbers.add(0);
             case 1 -> numbers.add(1);
             default -> {
-                int last = numbers.get(numbers.size() - 1);
-                int secondLast = numbers.get(numbers.size() - 2);
+                int last = numbers.get(numbers.length() - 1);
+                int secondLast = numbers.get(numbers.length() - 2);
                 numbers.add(last + secondLast);
             }
         }
 
-        return numbers.get(numbers.size() - 1);
+        return numbers.get(numbers.length() - 1);
     }
 
 }

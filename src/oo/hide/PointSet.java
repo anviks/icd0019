@@ -40,8 +40,11 @@ public class PointSet {
 
     public void doubleSize() {
         Point[] largerSet = new Point[set.length * 2];
+        boolean[] largerAddedNull = new boolean[addedNull.length * 2];
         System.arraycopy(set, 0, largerSet, 0, set.length);
+        System.arraycopy(addedNull, 0, largerAddedNull, 0, addedNull.length);
         set = largerSet;
+        addedNull = largerAddedNull;
     }
 
     public int size() {
