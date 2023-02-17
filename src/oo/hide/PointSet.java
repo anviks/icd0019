@@ -15,24 +15,26 @@ public class PointSet {
     }
 
     public void add(Point point) {
-        if (point == null || !contains(point)) {
-            boolean added = false;
+        if (point != null && contains(point)) {
+            return;
+        }
 
-            for (int i = 0; i < set.length; i++) {
-                if (set[i] == null && !addedNull[i]) {
-                    set[i] = point;
-                    added = true;
-                    if (point == null) {
-                        addedNull[i] = true;
-                    }
-                    break;
+        boolean added = false;
+
+        for (int i = 0; i < set.length; i++) {
+            if (set[i] == null && !addedNull[i]) {
+                set[i] = point;
+                added = true;
+                if (point == null) {
+                    addedNull[i] = true;
                 }
+                break;
             }
+        }
 
-            if (!added) {
-                doubleSize();
-                add(point);
-            }
+        if (!added) {
+            doubleSize();
+            add(point);
         }
     }
 
@@ -45,7 +47,9 @@ public class PointSet {
     public int size() {
         int count = 0;
         for (Point point : set) {
-            if (point != null) count++;
+            if (point != null) {
+                count++;
+            }
         }
 
         return count;
@@ -66,7 +70,9 @@ public class PointSet {
         System.arraycopy(set, 0, result.set, 0, set.length);
 
         for (Point point : other.set) {
-            if (point == null) continue;
+            if (point == null) {
+                continue;
+            }
             result.remove(point);
         }
 
@@ -85,7 +91,9 @@ public class PointSet {
         }
 
         for (Point point : result.set) {
-            if (point == null) continue;
+            if (point == null) {
+                continue;
+            }
             if (!other.contains(point)) {
                 result.remove(point);
             }
@@ -95,7 +103,9 @@ public class PointSet {
     }
 
     public void remove(Point point) {
-        if (!contains(point)) return;
+        if (!contains(point)) {
+            return;
+        }
 
         for (int i = 0; i < set.length; i++) {
             if (point.equals(set[i])) {
