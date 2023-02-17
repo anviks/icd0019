@@ -2,21 +2,19 @@ package oo.hide;
 
 public class Fibonacci {
 
-    DynamicArray<Integer> numbers = new DynamicArray<>();
+    int[] lastTwoNumbers = new int[2];
 
     public int nextValue() {
-
-        switch (numbers.length()) {
-            case 0 -> numbers.add(0);
-            case 1 -> numbers.add(1);
-            default -> {
-                int last = numbers.get(numbers.length() - 1);
-                int secondLast = numbers.get(numbers.length() - 2);
-                numbers.add(last + secondLast);
-            }
+        if (lastTwoNumbers[1] == 0) {
+            lastTwoNumbers[1] = 1;
+        } else {
+            int first = lastTwoNumbers[1];
+            int second = lastTwoNumbers[0] + lastTwoNumbers[1];
+            lastTwoNumbers[0] = first;
+            lastTwoNumbers[1] = second;
         }
 
-        return numbers.get(numbers.length() - 1);
+        return lastTwoNumbers[0];
     }
 
 }
