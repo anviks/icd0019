@@ -80,9 +80,10 @@ public class NumberConverter {
             case 1 -> {
                 return dealWithOnes(num, "");
             }
+            default -> {
+                return null;
+            }
         }
-
-        return null;
     }
 
 
