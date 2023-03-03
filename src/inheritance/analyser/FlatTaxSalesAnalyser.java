@@ -9,7 +9,7 @@ public final class FlatTaxSalesAnalyser extends AbstractAnalyser {
     }
 
     @Override
-    public boolean differentiated() {
+    protected boolean differentiated() {
         return false;
     }
 

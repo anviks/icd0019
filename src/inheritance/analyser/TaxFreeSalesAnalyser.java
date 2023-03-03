@@ -10,7 +10,7 @@ public final class TaxFreeSalesAnalyser extends AbstractAnalyser {
     }
 
     @Override
-    public boolean differentiated() {
+    protected boolean differentiated() {
         return false;
     }
 
