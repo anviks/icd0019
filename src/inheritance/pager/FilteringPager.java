@@ -8,7 +8,6 @@ public class FilteringPager {
     private final SimplePager dataSource;
     private final int pageSize;
     private int pageNumber = -1;
-    private int pages = 0;
 
     public FilteringPager(SimplePager dataSource, int pageSize) {
         this.dataSource = dataSource;
@@ -26,23 +25,24 @@ public class FilteringPager {
             throw new IllegalStateException("there is no current page");
         }
 
-        return noNullsData().subList(pageNumber * pageSize, Math.min((pageNumber + 1) * pageSize, pages));
+        return noNullsData(pageNumber * pageSize, (pageNumber + 1) * pageSize);
     }
 
     public List<Integer> getPreviousPage() {
-        if (pageNumber <= 0) {
-            throw new IllegalStateException("there is no previous page");
-        } else {
-            pageNumber--;
-        }
+        pageNumber--;
 
         return getCurrentPage();
     }
 
-    private List<Integer> noNullsData() {
+    private List<Integer> noNullsData(int start, int end) {
         List<Integer> data = new ArrayList<>();
 
-        for (int i = 0; dataSource.hasPage(i); i++) {
+        for (int i = 0; data.size() < end; i++) {
+
+            if (!dataSource.hasPage(i)) {
+                throw new IllegalArgumentException();
+            }
+
             for (Integer num : dataSource.getPage(i)) {
                 if (num != null) {
                     data.add(num);
@@ -50,7 +50,6 @@ public class FilteringPager {
             }
         }
 
-        pages = data.size();
-        return data;
+        return data.subList(start, end);
     }
 }
