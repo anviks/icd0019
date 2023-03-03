@@ -23,5 +23,5 @@ public abstract class AbstractLetterSender {
         }
     }
 
-    public abstract void sendLetter();
+    protected abstract void sendLetter();
 }

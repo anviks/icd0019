@@ -9,7 +9,7 @@ public class SmsLetterSender extends AbstractLetterSender {
     }
 
     @Override
-    public void sendLetter() {
+    protected void sendLetter() {
         String greeting = "Good " + getTimeOfDayString();
         String contents = "Dead customer, ...";
 

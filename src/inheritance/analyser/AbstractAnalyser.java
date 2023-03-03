@@ -80,6 +80,6 @@ public sealed abstract class AbstractAnalyser permits DifferentiatedTaxSalesAnal
         return mostEarned;
     }
 
-    public abstract boolean differentiated();
+    protected abstract boolean differentiated();
 
 }
