@@ -8,6 +8,7 @@ public class SmsLetterSender extends AbstractLetterSender {
         super(currentTime);
     }
 
+    @Override
     public void sendLetter() {
         String greeting = "Good " + getTimeOfDayString();
         String contents = "Dead customer, ...";
@@ -18,6 +19,4 @@ public class SmsLetterSender extends AbstractLetterSender {
         System.out.println("Title: " + greeting);
         System.out.println("Text: " + contents);
     }
-
-
 }

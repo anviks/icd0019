@@ -22,4 +22,6 @@ public abstract class AbstractLetterSender {
             return "night";
         }
     }
+
+    public abstract void sendLetter();
 }

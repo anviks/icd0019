@@ -8,6 +8,7 @@ public class EmailLetterSender extends AbstractLetterSender {
         super(currentTime);
     }
 
+    @Override
     public void sendLetter() {
         String greeting = "Good " + getTimeOfDayString();
         String contents = "Dead customer, ...";

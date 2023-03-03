@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public sealed abstract class AbstractAnalyser permits DifferentiatedTaxSalesAnalyser, FlatTaxSalesAnalyser, TaxFreeSalesAnalyser {
-    private List<SalesRecord> records;
+    private final List<SalesRecord> records;
     protected Double vat = 0.2;
-    protected boolean differentiated = false;
 
     public AbstractAnalyser(List<SalesRecord> records) {
         this.records = records;
@@ -29,7 +28,7 @@ public sealed abstract class AbstractAnalyser permits DifferentiatedTaxSalesAnal
 
     private Double getEarnings(double earnings, List<SalesRecord> records) {
         for (SalesRecord record : records) {
-            if (differentiated && record.hasReducedRate()) {
+            if (differentiated() && record.hasReducedRate()) {
                 earnings += record.getItemsSold() * record.getProductPrice() / 1.1;
             } else {
                 earnings += record.getItemsSold() * record.getProductPrice() / (1 + vat);
@@ -65,7 +64,7 @@ public sealed abstract class AbstractAnalyser permits DifferentiatedTaxSalesAnal
             String id = record.getProductId();
             double earnings;
 
-            if (differentiated && record.hasReducedRate()) {
+            if (differentiated() && record.hasReducedRate()) {
                 earnings = itemEarnings.getOrDefault(id, 0.0) + record.getItemsSold() * record.getProductPrice() / 1.1;
             } else {
                 earnings = itemEarnings.getOrDefault(id, 0.0) + record.getItemsSold() * record.getProductPrice() / (1 + vat);
@@ -80,5 +79,7 @@ public sealed abstract class AbstractAnalyser permits DifferentiatedTaxSalesAnal
 
         return mostEarned;
     }
+
+    public abstract boolean differentiated();
 
 }

@@ -8,5 +8,10 @@ public final class FlatTaxSalesAnalyser extends AbstractAnalyser {
         super(records);
     }
 
+    @Override
+    public boolean differentiated() {
+        return false;
+    }
+
 
 }

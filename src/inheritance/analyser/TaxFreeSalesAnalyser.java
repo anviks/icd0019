@@ -9,4 +9,9 @@ public final class TaxFreeSalesAnalyser extends AbstractAnalyser {
         vat = 0.0;
     }
 
+    @Override
+    public boolean differentiated() {
+        return false;
+    }
+
 }
