@@ -12,9 +12,7 @@ public class FilteringPager {
     private int endingPage = 0;
     private int startingIndex = -1;
     private int breakPointIndex = 0;
-    private int recentlyTurnedNextPage = -5;
-    private int previousCachedNum = 0;
-    private int cachedNum = 0;
+    private int lastDirection = 0;
 
 
     public FilteringPager(SimplePager dataSource, int pageSize) {
@@ -41,12 +39,7 @@ public class FilteringPager {
             while (breakPointIndex < page.size()) {
 
                 if (page.get(breakPointIndex) != null) {
-                    if (recentlyTurnedNextPage != 0) {
-                        data.add(page.get(breakPointIndex));
-                    } else {
-                        recentlyTurnedNextPage = 1;
-                    }
-
+                    data.add(page.get(breakPointIndex));
                 }
                 if (data.size() == pageSize) {
                     breakPointIndex++;
@@ -63,10 +56,7 @@ public class FilteringPager {
 
         }
         endingPage = loopBroken ? i - 1 : i;
-        recentlyTurnedNextPage = 1;
-
-        previousCachedNum = cachedNum;
-        cachedNum = data.get(data.size() - 1);
+        lastDirection = 1;
 
         return data;
     }
@@ -99,9 +89,6 @@ public class FilteringPager {
         endingPage = startingPage - 1;
         breakPointIndex = startingIndex - 1;
 
-        if (recentlyTurnedNextPage == 1) {
-            data.add(previousCachedNum);
-        }
 
 
         int i;
@@ -145,7 +132,9 @@ public class FilteringPager {
         }
         startingPage = loopBroken ? i + 1 : i;
         Collections.reverse(data);
-        recentlyTurnedNextPage = 0;
+//        System.out.println(startingPage + " - " + endingPage);
+        System.out.println(startingIndex + " - " + breakPointIndex);
+//        lastDirection = -1;
 
         return data;
     }
