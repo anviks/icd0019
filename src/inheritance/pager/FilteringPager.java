@@ -1,7 +1,6 @@
 package inheritance.pager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FilteringPager {
@@ -10,7 +9,7 @@ public class FilteringPager {
     private int startingPage;
     private int endingPage;
     private int startingIndex;
-    private int breakPointIndex;
+    private int endingIndex;
 
 
     public FilteringPager(SimplePager dataSource, int pageSize) {
@@ -19,11 +18,11 @@ public class FilteringPager {
     }
 
     public List<Integer> getNextPage() {
-        List<Integer> data = new ArrayList<>();
+        List<Integer> filteredPage = new ArrayList<>();
         startingPage = endingPage;
-        startingIndex = breakPointIndex - 1;
+        startingIndex = endingIndex - 1;
 
-        while (data.size() < pageSize) {
+        while (filteredPage.size() < pageSize) {
 
             if (!dataSource.hasPage(endingPage)) {
                 throw new IllegalStateException();
@@ -31,34 +30,30 @@ public class FilteringPager {
 
             List<Integer> page = dataSource.getPage(endingPage);
 
-            while (breakPointIndex < page.size()) {
-                Integer item = page.get(breakPointIndex);
-                breakPointIndex++;
+            while (endingIndex < page.size()) {
+                Integer item = page.get(endingIndex++);
 
-                if (item == null) {
-                    continue;
+                if (item != null) {
+                    filteredPage.add(item);
                 }
 
-                data.add(item);
-
-                if (data.size() == pageSize) {
-                    return data;
+                if (filteredPage.size() == pageSize) {
+                    return filteredPage;
                 }
             }
-
-            breakPointIndex = 0;
+            endingIndex = 0;
             endingPage++;
         }
 
-        return data;
+        return filteredPage;
     }
 
     public List<Integer> getCurrentPage() {
-        List<Integer> data = new ArrayList<>();
+        List<Integer> filteredPage = new ArrayList<>();
         int tempStartingPage = startingPage;
         int tempStartingIndex = startingIndex + 1;
 
-        while (data.size() < pageSize) {
+        while (filteredPage.size() < pageSize) {
 
             if (!dataSource.hasPage(tempStartingPage)) {
                 throw new IllegalStateException();
@@ -67,27 +62,29 @@ public class FilteringPager {
             List<Integer> page = dataSource.getPage(tempStartingPage);
 
             while (tempStartingIndex < page.size()) {
-                Integer element = page.get(tempStartingIndex++);
-                if (element != null) {
-                    data.add(element);
-                    if (data.size() == pageSize) {
-                        return data;
-                    }
+                Integer item = page.get(tempStartingIndex++);
+
+                if (item != null) {
+                    filteredPage.add(item);
+                }
+
+                if (filteredPage.size() == pageSize) {
+                    return filteredPage;
                 }
             }
             tempStartingIndex = 0;
             tempStartingPage++;
         }
 
-        return data;
+        return filteredPage;
     }
 
     public List<Integer> getPreviousPage() {
-        List<Integer> data = new ArrayList<>();
+        List<Integer> filteredPage = new ArrayList<>();
         endingPage = startingPage;
-        breakPointIndex = startingIndex + 1;
+        endingIndex = startingIndex + 1;
 
-        while (data.size() < pageSize) {
+        while (filteredPage.size() < pageSize) {
 
             if (!dataSource.hasPage(startingPage)) {
                 throw new IllegalStateException();
@@ -96,24 +93,21 @@ public class FilteringPager {
             List<Integer> page = dataSource.getPage(startingPage);
 
             while (startingIndex >= 0) {
-                Integer element = page.get(startingIndex);
-                startingIndex--;
-                if (element == null) {
-                    continue;
+                Integer item = page.get(startingIndex--);
+
+                if (item != null) {
+                    filteredPage.add(0, item);
                 }
-                data.add(element);
-                if (data.size() == pageSize) {
-                    Collections.reverse(data);
-                    return data;
+
+                if (filteredPage.size() == pageSize) {
+                    return filteredPage;
                 }
             }
-
             startingPage--;
             startingIndex = page.size() - 1;
         }
 
-        Collections.reverse(data);
-        return data;
+        return filteredPage;
     }
 
 }
