@@ -82,8 +82,8 @@ public class FilteringPagerTests {
         while (memoryPager.hasNext()) {
             System.out.println("next: " + pager.getNextPage());
             System.out.println("next: " + memoryPager.getNextPage());
-//            assertThat(pager.getNextPage(), is(memoryPager.getNextPage()));
-//            assertThat(pager.getCurrentPage(), is(memoryPager.getCurrentPage()));
+            assertThat(pager.getNextPage(), is(memoryPager.getNextPage()));
+            assertThat(pager.getCurrentPage(), is(memoryPager.getCurrentPage()));
         }
 
         while (memoryPager.hasPrevious()) {
@@ -91,8 +91,8 @@ public class FilteringPagerTests {
             System.out.println("previous: " + memoryPager.getPreviousPage());
             System.out.println("next: " + pager.getNextPage());
             System.out.println("next: " + memoryPager.getNextPage());
-//            assertThat(pager.getPreviousPage(), is(memoryPager.getPreviousPage()));
-//            assertThat(pager.getCurrentPage(), is(memoryPager.getCurrentPage()));
+            assertThat(pager.getPreviousPage(), is(memoryPager.getPreviousPage()));
+            assertThat(pager.getCurrentPage(), is(memoryPager.getCurrentPage()));
         }
     }
 
