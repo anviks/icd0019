@@ -5,137 +5,114 @@ import java.util.Collections;
 import java.util.List;
 
 public class FilteringPager {
-
     private final SimplePager dataSource;
     private final int pageSize;
     private int startingPage;
-    private int endingPage = 0;
-    private int startingIndex = -1;
-    private int breakPointIndex = 0;
-    private int lastDirection = 0;
+    private int endingPage;
+    private int startingIndex;
+    private int breakPointIndex;
 
 
     public FilteringPager(SimplePager dataSource, int pageSize) {
         this.dataSource = dataSource;
         this.pageSize = pageSize;
-        this.startingPage = -pageSize;
     }
 
     public List<Integer> getNextPage() {
-        boolean loopBroken = false;
         List<Integer> data = new ArrayList<>();
         startingPage = endingPage;
-        startingIndex = breakPointIndex + 1;
+        startingIndex = breakPointIndex - 1;
 
-        int i;
-        for (i = startingPage; data.size() < pageSize; i++) {
+        while (data.size() < pageSize) {
 
-            if (!dataSource.hasPage(i)) {
+            if (!dataSource.hasPage(endingPage)) {
                 throw new IllegalStateException();
             }
 
-            List<Integer> page = dataSource.getPage(i);
+            List<Integer> page = dataSource.getPage(endingPage);
 
             while (breakPointIndex < page.size()) {
-
-                if (page.get(breakPointIndex) != null) {
-                    data.add(page.get(breakPointIndex));
-                }
-                if (data.size() == pageSize) {
-                    breakPointIndex++;
-                    loopBroken = true;
-                    break;
-                }
-
+                Integer item = page.get(breakPointIndex);
                 breakPointIndex++;
+
+                if (item == null) {
+                    continue;
+                }
+
+                data.add(item);
+
+                if (data.size() == pageSize) {
+                    return data;
+                }
             }
 
-            if (!loopBroken) {
-                breakPointIndex = 0;
-            }
-
+            breakPointIndex = 0;
+            endingPage++;
         }
-        endingPage = loopBroken ? i - 1 : i;
-        lastDirection = 1;
 
         return data;
     }
 
     public List<Integer> getCurrentPage() {
         List<Integer> data = new ArrayList<>();
+        int tempStartingPage = startingPage;
+        int tempStartingIndex = startingIndex + 1;
 
-        for (int i = startingPage; data.size() < pageSize; i++) {
+        while (data.size() < pageSize) {
 
-            if (!dataSource.hasPage(i)) {
+            if (!dataSource.hasPage(tempStartingPage)) {
                 throw new IllegalStateException();
             }
 
-            for (Integer num : dataSource.getPage(i)) {
-                if (num != null) {
-                    data.add(num);
-                }
-                if (data.size() == pageSize) {
-                    break;
+            List<Integer> page = dataSource.getPage(tempStartingPage);
+
+            while (tempStartingIndex < page.size()) {
+                Integer element = page.get(tempStartingIndex++);
+                if (element != null) {
+                    data.add(element);
+                    if (data.size() == pageSize) {
+                        return data;
+                    }
                 }
             }
+            tempStartingIndex = 0;
+            tempStartingPage++;
         }
 
         return data;
     }
 
     public List<Integer> getPreviousPage() {
-        boolean loopBroken = false;
         List<Integer> data = new ArrayList<>();
-        endingPage = startingPage - 1;
-        breakPointIndex = startingIndex - 1;
+        endingPage = startingPage;
+        breakPointIndex = startingIndex + 1;
 
+        while (data.size() < pageSize) {
 
-
-        int i;
-        for (i = endingPage; data.size() < pageSize; i--) {
-
-            if (!dataSource.hasPage(i)) {
+            if (!dataSource.hasPage(startingPage)) {
                 throw new IllegalStateException();
             }
 
-            List<Integer> page = dataSource.getPage(i);
+            List<Integer> page = dataSource.getPage(startingPage);
 
             while (startingIndex >= 0) {
-                if (page.get(startingIndex) != null) {
-                    data.add(page.get(startingIndex));
-                }
-                if (data.size() == pageSize) {
-                    System.out.println("loop is broken");
-                    startingIndex--;
-                    loopBroken = true;
-                    break;
-                }
-
+                Integer element = page.get(startingIndex);
                 startingIndex--;
+                if (element == null) {
+                    continue;
+                }
+                data.add(element);
+                if (data.size() == pageSize) {
+                    Collections.reverse(data);
+                    return data;
+                }
             }
 
-            if (!loopBroken) {
-                startingIndex = page.size() - 1;
-            } else {
-                break;
-            }
-
-
-//            for (Integer num : dataSource.getPage(i)) {
-//                if (num != null) {
-//                    data.add(num);
-//                }
-//                if (data.size() == pageSize) {
-//                    break;
-//                }
-//            }
+            startingPage--;
+            startingIndex = page.size() - 1;
         }
-        startingPage = loopBroken ? i + 1 : i;
-        Collections.reverse(data);
-//        System.out.println(startingPage + " - " + endingPage);
-        System.out.println(startingIndex + " - " + breakPointIndex);
-//        lastDirection = -1;
 
+        Collections.reverse(data);
         return data;
     }
 
