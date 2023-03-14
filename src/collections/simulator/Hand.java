@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Hand implements Iterable<Card>, Comparable<Hand> {
 
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public void addCard(Card card) {
         cards.add(card);
