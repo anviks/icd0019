@@ -1,15 +1,11 @@
 package collections.simulator;
 
-import inheritance.constructor.Car;
-
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
 public class Simulator {
 
-    @SuppressWarnings("PMD.UnusedPrivateField")
-    private double iterations;
+    private final double iterations;
     private final Hand deck = Helpers.getSuitedHand("2s3s4s5s6s7s8s9sTsJsQsKsAs2h3h4h5h6h7h8h9hThJhQhKhAh2d3d4d5d6d7d8d9dTdJdQdKdAd2c3c4c5c6c7c8c9cTcJcQcKcAc");
 
     public Simulator(double iterations) {
