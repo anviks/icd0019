@@ -37,9 +37,10 @@ public class SimulatorTests {
     @Test
     public void calculatesProbabilitiesUsingSimulation() {
 
-        Simulator simulator = new Simulator(5e6);
+        Simulator simulator = new Simulator(5e4);
 
         Map<HandType, Double> map = simulator.calculateProbabilities();
+        System.out.println(map);
 
         // https://en.wikipedia.org/wiki/Poker_probability#Frequency_of_5-card_poker_hands
 

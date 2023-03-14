@@ -1,5 +1,7 @@
 package collections.simulator;
 
+import inheritance.constructor.Car;
+
 import java.util.*;
 
 public class Hand implements Iterable<Card>, Comparable<Hand> {
@@ -8,6 +10,24 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public void removeCard(Card card) {
+        cards.remove(card);
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
+    public Card get(int index) {
+        return cards.get(index);
+    }
+
+    public Hand copy() {
+        Hand result = new Hand();
+        result.cards.addAll(cards);
+        return result;
     }
 
     @Override
@@ -87,6 +107,30 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
 
     @Override
     public int compareTo(Hand other) {
-        return 0;
+        if (getHandType().ordinal() > other.getHandType().ordinal()) {
+            return 1;
+        } else if (getHandType().ordinal() < other.getHandType().ordinal()) {
+            return -1;
+        } else if (getHandType() == HandType.HIGH_CARD) {
+            List<Integer> values = cards.stream().map(card -> card.getValue().ordinal()).sorted().toList();
+            List<Integer> otherValues = other.cards.stream().map(card -> card.getValue().ordinal()).sorted().toList();
+            int largest = values.get(values.size() - 1);
+            int largestOther = otherValues.get(otherValues.size() - 1);
+
+            return Integer.compare(largest, largestOther);
+        } else {
+            List<Integer> values = cards.stream().map(card -> card.getValue().ordinal()).sorted(Comparator.reverseOrder()).toList();
+            List<Integer> otherValues = other.cards.stream().map(card -> card.getValue().ordinal()).sorted(Comparator.reverseOrder()).toList();
+
+            for (int i = 0; i < (values.size() + otherValues.size()) / 2; i++) {
+                if (values.get(i) > otherValues.get(i)) {
+                    return 1;
+                } else if (values.get(i) < otherValues.get(i)) {
+                    return -1;
+                }
+            }
+
+            return 0;
+        }
     }
 }
