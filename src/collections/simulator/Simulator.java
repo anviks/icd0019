@@ -14,7 +14,7 @@ public class Simulator {
 
     public Map<HandType, Double> calculateProbabilities() {
         Map<HandType, Double> probabilities = new HashMap<>();
-        List<Hand> hands = new ArrayList<>();
+        Hand[] hands = new Hand[Integer.parseInt(Math.round(iterations) + "")];
         Random random = new Random();
 
         for (int i = 0; i < iterations; i++) {
@@ -27,10 +27,10 @@ public class Simulator {
                 tempDeck.removeCard(tempDeck.get(index));
             }
 
-            hands.add(hand);
+            hands[i] = hand;
         }
 
-        List<HandType> handTypes = hands.stream().map(Hand::getHandType).toList();
+        List<HandType> handTypes = Arrays.stream(hands).map(Hand::getHandType).toList();
 
         for (HandType type : handTypes.stream().distinct().toList()) {
             if (List.of(HandType.HIGH_CARD, HandType.ONE_PAIR, HandType.TWO_PAIRS, HandType.TRIPS).contains(type)) {

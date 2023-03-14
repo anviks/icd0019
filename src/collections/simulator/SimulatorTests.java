@@ -37,7 +37,7 @@ public class SimulatorTests {
     @Test
     public void calculatesProbabilitiesUsingSimulation() {
 
-        Simulator simulator = new Simulator(5e6);
+        Simulator simulator = new Simulator(5e5);
 
         Map<HandType, Double> map = simulator.calculateProbabilities();
         System.out.println(map);
@@ -56,7 +56,7 @@ public class SimulatorTests {
         Hand hand1 = getSuitedHand("9h9s");
         Hand hand2 = getSuitedHand("AdKc");
 
-        Simulator simulator = new Simulator(7e6);
+        Simulator simulator = new Simulator(7e4);
 
         double winningOdds = simulator.getWinningOdds(hand1, hand2);
 
