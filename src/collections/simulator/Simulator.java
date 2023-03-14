@@ -15,11 +15,11 @@ public class Simulator {
     public Map<HandType, Double> calculateProbabilities() {
         Map<HandType, Double> probabilities = new HashMap<>();
         List<Hand> hands = new ArrayList<>();
+        Random random = new Random();
 
         for (int i = 0; i < iterations; i++) {
             Hand tempDeck = deck.copy();
             Hand hand = new Hand();
-            Random random = new Random();
 
             for (int j = 0; j < 5; j++) {
                 int index = random.nextInt(tempDeck.size());
@@ -45,6 +45,7 @@ public class Simulator {
         int wins = 0;
         int lossesOrDraws = 0;
         Hand deck = this.deck.copy();
+        Random random = new Random();
 
         for (int i = 0; i < player1hand.size(); i++) {
             deck.removeCard(player1hand.get(i));
@@ -58,7 +59,6 @@ public class Simulator {
             Hand tempDeck = deck.copy();
             Hand tempPlayer1 = player1hand.copy();
             Hand tempPlayer2 = player2hand.copy();
-            Random random = new Random();
 
             for (int j = 0; j < 5; j++) {
                 Card card = tempDeck.get(random.nextInt(tempDeck.size()));
