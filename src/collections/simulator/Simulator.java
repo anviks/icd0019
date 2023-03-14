@@ -34,7 +34,7 @@ public class Simulator {
 
         for (HandType type : handTypes.stream().distinct().toList()) {
             if (List.of(HandType.HIGH_CARD, HandType.ONE_PAIR, HandType.TWO_PAIRS, HandType.TRIPS).contains(type)) {
-                probabilities.put(type, ((double) (Collections.frequency(handTypes, type)) / handTypes.size()) * 100);
+                probabilities.put(type, Double.valueOf(Collections.frequency(handTypes, type)) / handTypes.size() * 100);
             }
         }
 
@@ -74,7 +74,7 @@ public class Simulator {
             }
         }
 
-        return ((double) wins) / (wins + lossesOrDraws) * 100;
+        return (Double.valueOf(wins)) / (wins + lossesOrDraws) * 100;
     }
 
 }
