@@ -83,8 +83,8 @@ public class HandTests {
 
     @Test
     public void handKnowsWhetherItContainsStraight() {
-//        assertThat(getHand("A2345").getHandType(),
-//                is(HandType.STRAIGHT));
+        assertThat(getHand("A2345").getHandType(),
+                is(HandType.STRAIGHT));
 
         assertThat(getHand("TJQKA").getHandType(),
                 is(HandType.STRAIGHT));

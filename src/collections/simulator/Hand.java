@@ -63,7 +63,8 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
 
     private boolean isStraight() {
         List<Integer> uniqueValues = cards.stream().map(card -> card.getValue().ordinal()).distinct().sorted().toList();
-        return uniqueValues.size() == 5 && uniqueValues.get(0) + 4 == uniqueValues.get(4);
+        return uniqueValues.size() == 5
+                && (uniqueValues.get(0) + 4 == uniqueValues.get(4) || uniqueValues.equals(List.of(0, 1, 2, 3, 12)));
     }
 
     private boolean isTwoPairs() {
