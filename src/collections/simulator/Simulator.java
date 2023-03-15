@@ -30,11 +30,11 @@ public class Simulator {
             hands[i] = hand;
         }
 
-        List<HandType> handTypes = Arrays.stream(hands).map(Hand::getHandType).toList();
+        List<Integer> handTypes = Arrays.stream(hands).map(hand -> hand.getHandType().ordinal()).toList();
 
-        for (HandType type : handTypes.stream().distinct().toList()) {
+        for (int type : handTypes.stream().distinct().toList()) {
             if (List.of(HandType.HIGH_CARD, HandType.ONE_PAIR, HandType.TWO_PAIRS, HandType.TRIPS).contains(type)) {
-                probabilities.put(type, Double.valueOf(Collections.frequency(handTypes, type)) / handTypes.size() * 100);
+                probabilities.put(HandType.values()[type], Double.valueOf(Collections.frequency(handTypes, type)) / handTypes.size() * 100);
             }
         }
 
@@ -46,6 +46,7 @@ public class Simulator {
         int lossesOrDraws = 0;
         Hand deck = this.deck.copy();
         Random random = new Random();
+        List<Card> removedCards = new ArrayList<>();
 
         for (int i = 0; i < player1hand.size(); i++) {
             deck.removeCard(player1hand.get(i));
@@ -56,22 +57,27 @@ public class Simulator {
         }
 
         for (int i = 0; i < iterations; i++) {
-            Hand tempDeck = deck.copy();
-            Hand tempPlayer1 = player1hand.copy();
-            Hand tempPlayer2 = player2hand.copy();
-
             for (int j = 0; j < 5; j++) {
-                Card card = tempDeck.get(random.nextInt(tempDeck.size()));
-                tempDeck.removeCard(card);
-                tempPlayer1.addCard(card);
-                tempPlayer2.addCard(card);
+                Card card = deck.get(random.nextInt(deck.size()));
+                removedCards.add(card);
+                deck.removeCard(card);
+                player1hand.addCard(card);
+                player2hand.addCard(card);
             }
 
-            if (tempPlayer1.compareTo(tempPlayer2) > 0) {
+            if (player1hand.compareTo(player2hand) > 0) {
                 wins++;
             } else {
                 lossesOrDraws++;
             }
+
+            for (Card card : removedCards) {
+                deck.addCard(card);
+                player1hand.removeCard(card);
+                player2hand.removeCard(card);
+            }
+
+            removedCards.clear();
         }
 
         return (Double.valueOf(wins)) / (wins + lossesOrDraws) * 100;
