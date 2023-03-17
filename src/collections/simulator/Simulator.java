@@ -2,6 +2,7 @@ package collections.simulator;
 
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Simulator {
 
@@ -15,14 +16,13 @@ public class Simulator {
     public Map<HandType, Double> calculateProbabilities() {
         Map<HandType, Double> probabilities = new HashMap<>();
         Hand[] hands = new Hand[Integer.parseInt(Math.round(iterations) + "")];
-        Random random = new Random();
 
         for (int i = 0; i < iterations; i++) {
             Hand tempDeck = deck.copy();
             Hand hand = new Hand();
 
             for (int j = 0; j < 5; j++) {
-                int index = random.nextInt(tempDeck.size());
+                int index = ThreadLocalRandom.current().nextInt(tempDeck.size());
                 hand.addCard(tempDeck.get(index));
                 tempDeck.removeCard(tempDeck.get(index));
             }
@@ -33,7 +33,7 @@ public class Simulator {
         List<Integer> handTypes = Arrays.stream(hands).map(hand -> hand.getHandType().ordinal()).toList();
 
         for (int type : handTypes.stream().distinct().toList()) {
-            if (List.of(HandType.HIGH_CARD, HandType.ONE_PAIR, HandType.TWO_PAIRS, HandType.TRIPS).contains(type)) {
+            if (List.of(0, 1, 2, 3).contains(type)) {
                 probabilities.put(HandType.values()[type], Double.valueOf(Collections.frequency(handTypes, type)) / handTypes.size() * 100);
             }
         }
@@ -45,7 +45,6 @@ public class Simulator {
         int wins = 0;
         int lossesOrDraws = 0;
         Hand deck = this.deck.copy();
-        Random random = new Random();
         List<Card> removedCards = new ArrayList<>();
 
         for (int i = 0; i < player1hand.size(); i++) {
@@ -58,7 +57,7 @@ public class Simulator {
 
         for (int i = 0; i < iterations; i++) {
             for (int j = 0; j < 5; j++) {
-                Card card = deck.get(random.nextInt(deck.size()));
+                Card card = deck.get(ThreadLocalRandom.current().nextInt(deck.size()));
                 removedCards.add(card);
                 deck.removeCard(card);
                 player1hand.addCard(card);
