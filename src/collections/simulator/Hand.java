@@ -40,9 +40,9 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
     }
 
     public HandType getHandType() {
-        valuesList = cards.stream().map(card -> card.getValue().ordinal()).sorted().toList();
-        uniqueValuesList = cards.stream().map(card -> card.getValue().ordinal()).distinct().sorted().toList();
-        uniqueSuitsList = cards.stream().map(card -> card.getSuit().ordinal()).distinct().toList();
+        valuesList = new ArrayList<>(cards.stream().map(card -> card.getValue().ordinal()).sorted().toList());
+        uniqueValuesList = new ArrayList<>(cards.stream().map(card -> card.getValue().ordinal()).distinct().sorted().toList());
+        uniqueSuitsList = new ArrayList<>(cards.stream().map(card -> card.getSuit().ordinal()).distinct().toList());
 
         if (isStraightFlush()) {
             return HandType.STRAIGHT_FLUSH;
@@ -123,14 +123,15 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
 
             return Integer.compare(largest, largestOther);
         } else {
-            List<Integer> values = cards.stream().map(card -> card.getValue().ordinal()).sorted(Comparator.reverseOrder()).toList();
-            List<Integer> otherValues = other.cards.stream().map(card -> card.getValue().ordinal()).sorted(Comparator.reverseOrder()).toList();
-
-            for (int i = 0; i < (values.size() + otherValues.size()) / 2; i++) {
-                if (values.get(i) > otherValues.get(i)) {
-                    return 1;
-                } else if (values.get(i) < otherValues.get(i)) {
-                    return -1;
+            Collections.reverse(valuesList);
+            Collections.reverse(other.valuesList);
+            System.out.println(this + " and " + other);
+            while (!valuesList.isEmpty() && !other.valuesList.isEmpty()) {
+                if (valuesList.get(0).equals(other.valuesList.get(0))) {
+                    valuesList.remove(0);
+                    other.valuesList.remove(0);
+                } else {
+                    return valuesList.get(0).compareTo(other.valuesList.get(0));
                 }
             }
 

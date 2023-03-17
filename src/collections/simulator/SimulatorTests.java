@@ -37,7 +37,7 @@ public class SimulatorTests {
     @Test
     public void calculatesProbabilitiesUsingSimulation() {
 
-        Simulator simulator = new Simulator(5e6);
+        Simulator simulator = new Simulator(5e5);
 
         Map<HandType, Double> map = simulator.calculateProbabilities();
         System.out.println(map);
