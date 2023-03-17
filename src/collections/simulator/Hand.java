@@ -3,10 +3,14 @@ package collections.simulator;
 import inheritance.constructor.Car;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Hand implements Iterable<Card>, Comparable<Hand> {
 
     private final List<Card> cards = new ArrayList<>();
+    private List<Integer> valuesList;
+    private List<Integer> uniqueValuesList;
+    private List<Integer> uniqueSuitsList;
 
     public void addCard(Card card) {
         cards.add(card);
@@ -36,6 +40,10 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
     }
 
     public HandType getHandType() {
+        valuesList = cards.stream().map(card -> card.getValue().ordinal()).sorted().toList();
+        uniqueValuesList = cards.stream().map(card -> card.getValue().ordinal()).distinct().sorted().toList();
+        uniqueSuitsList = cards.stream().map(card -> card.getSuit().ordinal()).distinct().toList();
+
         if (isStraightFlush()) {
             return HandType.STRAIGHT_FLUSH;
         } else if (isNumberOfAKind(4)) {
@@ -62,9 +70,8 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
     }
 
     private boolean isNumberOfAKind(int number) {
-        List<Integer> values = cards.stream().map(card -> card.getValue().ordinal()).toList();
-        for (Integer value : values.stream().distinct().toList()) {
-            if (Collections.frequency(values, value) == number) {
+        for (Integer value : uniqueValuesList) {
+            if (Collections.frequency(valuesList, value) == number) {
                 return true;
             }
         }
@@ -77,19 +84,16 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
     }
 
     private boolean isFlush() {
-        List<Integer> uniqueSuits = cards.stream().map(card -> card.getSuit().ordinal()).distinct().toList();
-        return uniqueSuits.size() == 1 && cards.size() == 5;
+        return uniqueSuitsList.size() == 1 && cards.size() == 5;
     }
 
     private boolean isStraight() {
-        List<Integer> uniqueValues = cards.stream().map(card -> card.getValue().ordinal()).distinct().sorted().toList();
-        return uniqueValues.size() == 5
-                && (uniqueValues.get(0) + 4 == uniqueValues.get(4) || uniqueValues.equals(List.of(0, 1, 2, 3, 12)));
+        return uniqueValuesList.size() == 5
+                && (uniqueValuesList.get(0) + 4 == uniqueValuesList.get(4) || uniqueValuesList.equals(List.of(0, 1, 2, 3, 12)));
     }
 
     private boolean isTwoPairs() {
-        List<Integer> uniqueValues = cards.stream().map(card -> card.getValue().ordinal()).distinct().sorted().toList();
-        return !isNumberOfAKind(3) && uniqueValues.size() + 2 == cards.size();
+        return !isNumberOfAKind(3) && uniqueValuesList.size() + 2 == cards.size();
     }
 
     public boolean contains(Card card) {
