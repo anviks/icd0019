@@ -1,9 +1,6 @@
 package collections.simulator;
 
-import inheritance.constructor.Car;
-
 import java.util.*;
-import java.util.stream.Stream;
 
 public class Hand implements Iterable<Card>, Comparable<Hand> {
 
@@ -125,7 +122,6 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
         } else {
             Collections.reverse(valuesList);
             Collections.reverse(other.valuesList);
-            System.out.println(this + " and " + other);
             while (!valuesList.isEmpty() && !other.valuesList.isEmpty()) {
                 if (valuesList.get(0).equals(other.valuesList.get(0))) {
                     valuesList.remove(0);
