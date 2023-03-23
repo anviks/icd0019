@@ -19,7 +19,7 @@ public class ShoppingCart<T extends CartItem> {
     }
 
     public void increaseQuantity(String id) {
-        add(content.stream().filter(item -> item.getId().equals(id)).findAny().orElseThrow());
+        content.stream().filter(item -> item.getId().equals(id)).findFirst().ifPresent(this::add);
     }
 
     public void applyDiscountPercentage(Double discount) {
@@ -35,7 +35,7 @@ public class ShoppingCart<T extends CartItem> {
     }
 
     private Double getPrice(String id) {
-        return content.stream().filter(item -> Objects.equals(item.getId(), id)).findAny().orElseThrow().getPrice();
+        return content.stream().filter(item -> Objects.equals(item.getId(), id)).findFirst().orElseThrow().getPrice();
     }
 
     @Override
