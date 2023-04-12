@@ -32,12 +32,11 @@ public class ConnectionFinder {
     }
 
     private List<String> findConnections(String a, String b) {
-        List<String> path = new ArrayList<>();
-
         if (!connections.containsKey(a)) {
             return Collections.emptyList();
         }
 
+        List<String> path = new ArrayList<>();
         path.add(a);
 
         for (Map.Entry<String, Boolean> directConnection : connections.get(a).entrySet()) {
