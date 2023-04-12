@@ -12,26 +12,28 @@ public class ConnectionFinder {
     }
 
     public void add(Connection connection) {
-        Map<String, Boolean> endpoints = this.connections.getOrDefault(connection.getFrom(), new HashMap<>());
-        endpoints.put(connection.getTo(), false);
-        connections.put(connection.getFrom(), endpoints);
-
-        Map<String, Boolean> endpointsReversed = this.connections.getOrDefault(connection.getTo(), new HashMap<>());
-        endpointsReversed.put(connection.getFrom(), false);
-        connections.put(connection.getTo(), endpointsReversed);
+        addEndpoint(connection.getFrom(), connection.getTo());
+        addEndpoint(connection.getTo(), connection.getFrom());
     }
+
+    private void addEndpoint(String from, String to) {
+        Map<String, Boolean> endpoints = this.connections.getOrDefault(from, new HashMap<>());
+        endpoints.put(to, false);
+        connections.put(from, endpoints);
+    }
+
 
     public boolean hasConnection(String a, String b) {
         return !findConnection(a, b).isEmpty();
     }
 
     public List<String> findConnection(String a, String b) {
-        var connection = findConnections(a, b);
+        var connection = connectionFinder(a, b);
         resetConnections();
         return connection;
     }
 
-    private List<String> findConnections(String a, String b) {
+    private List<String> connectionFinder(String a, String b) {
         if (!connections.containsKey(a)) {
             return Collections.emptyList();
         }
@@ -51,7 +53,7 @@ public class ConnectionFinder {
                 return path;
             }
 
-            List<String> tempPath = findConnections(directConnection.getKey(), b);
+            List<String> tempPath = connectionFinder(directConnection.getKey(), b);
 
             if (!tempPath.isEmpty() && tempPath.get(tempPath.size() - 1).equals(b)) {
                 path.addAll(tempPath);
