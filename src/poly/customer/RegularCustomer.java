@@ -30,9 +30,15 @@ public final class RegularCustomer extends AbstractCustomer {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RegularCustomer that)) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof RegularCustomer that)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         return lastOrderDate.equals(that.lastOrderDate);
     }
 
