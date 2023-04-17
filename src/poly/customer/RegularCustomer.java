@@ -24,7 +24,6 @@ public final class RegularCustomer extends AbstractCustomer {
             }
 
             bonusPoints += order.getTotal() * multiplier;
-            lastOrderDate = order.getDate();
         }
     }
 
