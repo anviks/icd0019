@@ -1,7 +1,5 @@
 package poly.range;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Iterator;
 
 public class CustomIterable implements Iterable<Integer> {
@@ -14,7 +12,6 @@ public class CustomIterable implements Iterable<Integer> {
         this.end = end;
     }
 
-    @NotNull
     @Override
     public Iterator<Integer> iterator() {
         return new CustomIterator(start, end);
