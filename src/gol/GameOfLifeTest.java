@@ -26,7 +26,7 @@ public class GameOfLifeTest {
 
         int rows = 2;
         int cols = 3;
-
+        System.out.println(asString(game, rows, cols));
         assertThat(asString(game, rows, cols), is("X--" + "\n"
                                                 + "--X"));
     }
