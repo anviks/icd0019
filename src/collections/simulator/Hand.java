@@ -113,11 +113,8 @@ public class Hand implements Iterable<Card>, Comparable<Hand> {
         } else if (getHandType().ordinal() < other.getHandType().ordinal()) {
             return -1;
         } else if (getHandType() == HandType.HIGH_CARD) {
-            List<Integer> values = cards.stream().map(card -> card.getValue().ordinal()).sorted().toList();
-            List<Integer> otherValues = other.cards.stream().map(card -> card.getValue().ordinal()).sorted().toList();
-            int largest = values.get(values.size() - 1);
-            int largestOther = otherValues.get(otherValues.size() - 1);
-
+            int largest = valuesList.get(valuesList.size() - 1);
+            int largestOther = other.valuesList.get(other.valuesList.size() - 1);
             return Integer.compare(largest, largestOther);
         } else {
             Collections.reverse(valuesList);

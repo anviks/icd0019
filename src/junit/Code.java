@@ -38,7 +38,6 @@ public class Code {
         }
 
         char[] letters = inputString.toCharArray();
-
         int maxCount = 0;
         char maxChar = '\0';
 

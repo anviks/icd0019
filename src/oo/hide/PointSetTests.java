@@ -150,5 +150,4 @@ public class PointSetTests {
             throw new RuntimeException(e);
         }
     }
-
 }
