@@ -19,8 +19,8 @@ public class SequenceFinder {
         System.out.println(firstSequence);
         System.out.println(secondSequence);
 
-        var seq1 = firstSequence.toCharArray();
-        var seq2 = secondSequence.toCharArray();
+        char[] seq1 = firstSequence.toCharArray();
+        char[] seq2 = secondSequence.toCharArray();
 
         for (int i = 0; i < seq1.length; i++) {
             for (int j = 0; j < seq2.length; j++) {
@@ -39,37 +39,73 @@ public class SequenceFinder {
     }
 
 
+    /**
+     * Upon finding two matching characters from a sequence
+     *
+     * @param seq1
+     * @param seq2
+     * @param pos1
+     * @param pos2
+     * @return
+     */
     private StringBuilder compare(char[] seq1, char[] seq2, int pos1, int pos2) {
         int errors = 0;
         StringBuilder common = new StringBuilder();
+        int matchingLength = 0;
 
         while (pos1 < seq1.length && pos2 < seq2.length) {
             if (seq1[pos1] != seq2[pos2]) {
                 errors++;
-            }
 
-            if (errors > maxCapLength) {
-                break;
+                if (matchingLength < minSequenceLength) {
+                    errors += matchingLength;
+                }
+
+                if (errors > maxCapLength) {
+                    break;
+                }
+
+                matchingLength = 0;
+            } else {
+                matchingLength++;
             }
 
             common.append(seq1[pos1]);
             pos1++;
             pos2++;
+
         }
 
         pos1--;
         pos2--;
 
-        while (seq1[pos1] != seq2[pos2]) {
-            common.deleteCharAt(common.length() - 1);
-            pos1--;
-            pos2--;
+        if (matchingLength < minSequenceLength) {
+            while (matchingLength > 0) {
+                common.deleteCharAt(common.length() - 1);
+                matchingLength--;
+                pos1--;
+                pos2--;
+            }
+        }
+
+        try {
+            while (seq1[pos1] != seq2[pos2]) {
+                common.deleteCharAt(common.length() - 1);
+                pos1--;
+                pos2--;
+            }
+        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+            return new StringBuilder("hi");
         }
 
         return common;
     }
 
-
+    /**
+     * Remove a sequence from a set, if that sequence is fully contained by another sequence.
+     *
+     * @param sequences set of sequences to alter
+     */
     private void removeDuplicates(Set<String> sequences) {
         Set<String> sequencesToRemove = new HashSet<>();
 
