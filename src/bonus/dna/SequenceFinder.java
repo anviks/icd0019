@@ -12,12 +12,19 @@ public class SequenceFinder {
         this.maxCapLength = maxCapLength;
     }
 
+    /**
+     * Find the longest matching subsequences. The subsequences can have {@code this.maxCapLength}
+     * of different characters to still be counted as matching subsequences. When split from differences,
+     * each part of the subsequence must be at least {@code this.minSequenceLength} characters long or
+     * that part of the subsequence will be counted as different characters.
+     *
+     * @param firstSequence  first sequence
+     * @param secondSequence second sequence
+     * @return A set of the longest matching subsequences.
+     */
     public Set<String> findMatchingSubsequences(String firstSequence,
                                                 String secondSequence) {
         Set<String> matches = new HashSet<>();
-
-        System.out.println(firstSequence);
-        System.out.println(secondSequence);
 
         char[] seq1 = firstSequence.toCharArray();
         char[] seq2 = secondSequence.toCharArray();
@@ -40,13 +47,14 @@ public class SequenceFinder {
 
 
     /**
-     * Upon finding two matching characters from a sequence
+     * Upon finding two matching characters from a sequence,
+     * start comparing the following characters with each other.
      *
-     * @param seq1
-     * @param seq2
-     * @param pos1
-     * @param pos2
-     * @return
+     * @param seq1 first sequence of characters
+     * @param seq2 second sequence of characters
+     * @param pos1 index of a character in {@code seq1}, that matches with a character in {@code seq2}
+     * @param pos2 index of a character in {@code seq2}, that matches with a character in {@code seq1}
+     * @return a {@link StringBuilder} object containing the matching subsequence
      */
     private StringBuilder compare(char[] seq1, char[] seq2, int pos1, int pos2) {
         int errors = 0;
@@ -88,14 +96,14 @@ public class SequenceFinder {
             }
         }
 
-        try {
-            while (seq1[pos1] != seq2[pos2]) {
-                common.deleteCharAt(common.length() - 1);
-                pos1--;
-                pos2--;
-            }
-        } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
-            return new StringBuilder("hi");
+        if (common.isEmpty()) {
+            return common;
+        }
+
+        while (seq1[pos1] != seq2[pos2]) {
+            common.deleteCharAt(common.length() - 1);
+            pos1--;
+            pos2--;
         }
 
         return common;
